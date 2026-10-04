@@ -1,0 +1,827 @@
+[
+  {
+    "type": "header",
+    "version": "5.2.3",
+    "comment": "Export to JSON plugin for phpMyAdmin"
+  },
+  { "type": "database", "name": "ai-stock" },
+  {
+    "type": "table",
+    "name": "icbs",
+    "database": "ai-stock",
+    "data": [
+      {
+        "id": "1",
+        "code": "0533",
+        "name": "Thăm dò và sản xuất dầu khí",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "2",
+        "code": "0537",
+        "name": "Dầu khí tích hợp",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "3",
+        "code": "0573",
+        "name": "Thiết bị, dịch vụ khai thác dầu mỏ",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "4",
+        "code": "0577",
+        "name": "Ống dẫn dầu khí",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "5",
+        "code": "0583",
+        "name": "Thiết bị năng lượng tái tạo",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "6",
+        "code": "0587",
+        "name": "Nhiên liệu thay thế",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "7",
+        "code": "1353",
+        "name": "Hóa chất cơ bản: Sản phẩm nhựa, cao su, hóa chất",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "8",
+        "code": "1357",
+        "name": "Hóa chất chuyên dụng",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "9",
+        "code": "1733",
+        "name": "Trồng rừng, khai thác gỗ và kinh doanh lâm sản",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "10",
+        "code": "1737",
+        "name": "Giấy",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "11",
+        "code": "1753",
+        "name": "Nhôm",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "12",
+        "code": "1755",
+        "name": "Kim loại màu",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "13",
+        "code": "1757",
+        "name": "Thép",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "14",
+        "code": "1771",
+        "name": "Khai thác than",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "15",
+        "code": "1773",
+        "name": "Kim cương và đá quý",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "16",
+        "code": "1775",
+        "name": "Khai khoáng chung",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "17",
+        "code": "1777",
+        "name": "Khai thác vàng",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "18",
+        "code": "1779",
+        "name": "Khai thác bạch kim và các kim loại quý khác",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "19",
+        "code": "2353",
+        "name": "Thiết bị, vật liệu xây dựng",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "20",
+        "code": "2357",
+        "name": "Xây dựng, xây lắp",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "21",
+        "code": "2713",
+        "name": "Công nghiệp hàng không vũ trụ",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "22",
+        "code": "2717",
+        "name": "Công nghiệp quốc phòng",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "23",
+        "code": "2723",
+        "name": "Thùng, hộp, bao bì",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "24",
+        "code": "2727",
+        "name": "Công nghiệp đa ngành",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "25",
+        "code": "2733",
+        "name": "Các linh kiện và thiết bị điện",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "26",
+        "code": "2737",
+        "name": "Các thiết bị điện tử",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "27",
+        "code": "2753",
+        "name": "Các phương tiện thương mại và xe thùng",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "28",
+        "code": "2757",
+        "name": "Máy công nghiệp",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "29",
+        "code": "2771",
+        "name": "Dịch vụ bưu chính",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "30",
+        "code": "2773",
+        "name": "Vận tải biển",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "31",
+        "code": "2775",
+        "name": "Đường sắt",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "32",
+        "code": "2777",
+        "name": "Dịch vụ vận tải",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "33",
+        "code": "2779",
+        "name": "Xe tải",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "34",
+        "code": "2791",
+        "name": "Các dịch vụ hỗ trợ kinh doanh",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "35",
+        "code": "2793",
+        "name": "Đào tạo nhân sự và việc làm",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "36",
+        "code": "2795",
+        "name": "Điều hành, theo dõi tài chính",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "37",
+        "code": "2797",
+        "name": "Các nhà cung cấp công nghiệp",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "38",
+        "code": "2799",
+        "name": "Dịch vụ xử lý nước thải, rác thải",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "39",
+        "code": "3353",
+        "name": "Ô tô",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "40",
+        "code": "3355",
+        "name": "Linh kiện ôtô",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "41",
+        "code": "3357",
+        "name": "Lốp",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "42",
+        "code": "3533",
+        "name": "Bia",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "43",
+        "code": "3535",
+        "name": "Chưng cất và bán rượu",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "44",
+        "code": "3537",
+        "name": "Nước giải khát",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "45",
+        "code": "3573",
+        "name": "Nông sản, thủy sản, đồn điền",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "46",
+        "code": "3577",
+        "name": "Sản phẩm thực phẩm",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "47",
+        "code": "3722",
+        "name": "Sản phẩm gia dụng lâu bền",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "48",
+        "code": "3724",
+        "name": "Sản phẩm gia dụng không lâu bền",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "49",
+        "code": "3726",
+        "name": "Nội thất",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "50",
+        "code": "3728",
+        "name": "Xây dựng nhà ở",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "51",
+        "code": "3743",
+        "name": "Đồ điện tử tiêu dùng",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "52",
+        "code": "3745",
+        "name": "Sản phẩm tiêu khiển",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "53",
+        "code": "3747",
+        "name": "Đồ chơi",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "54",
+        "code": "3763",
+        "name": "Quần áo và đồ phụ kiện",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "55",
+        "code": "3765",
+        "name": "Da giầy",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "56",
+        "code": "3767",
+        "name": "Sản phẩm cá nhân",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "57",
+        "code": "3785",
+        "name": "Thuốc lá",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "58",
+        "code": "4533",
+        "name": "Các nhà cung cấp dịch vụ y tế",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "59",
+        "code": "4535",
+        "name": "Trang thiết bị y tế",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "60",
+        "code": "4537",
+        "name": "Vật tư y tế",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "61",
+        "code": "4573",
+        "name": "Công nghệ sinh học",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "62",
+        "code": "4577",
+        "name": "Dược phẩm",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "63",
+        "code": "5333",
+        "name": "Bán lẻ thuốc",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "64",
+        "code": "5337",
+        "name": "Bán buôn bán lẻ thực phẩm",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "65",
+        "code": "5371",
+        "name": "Bán lẻ đồ may mặc",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "66",
+        "code": "5373",
+        "name": "Bán lẻ tổng hợp",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "67",
+        "code": "5375",
+        "name": "Bán lẻ đồ nội thất",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "68",
+        "code": "5377",
+        "name": "Dịch vụ tiêu dùng đặc chủng",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "69",
+        "code": "5379",
+        "name": "Bán lẻ đặc chủng",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "70",
+        "code": "5553",
+        "name": "Phát thanh truyền hình",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "71",
+        "code": "5555",
+        "name": "Các công ty truyền thông",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "72",
+        "code": "5557",
+        "name": "Xuất bản",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "73",
+        "code": "5751",
+        "name": "Hàng không chở khách",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "74",
+        "code": "5752",
+        "name": "Cờ bạc",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "75",
+        "code": "5753",
+        "name": "Khách sạn",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "76",
+        "code": "5755",
+        "name": "Dịch vụ giải trí",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "77",
+        "code": "5757",
+        "name": "Nhà hàng và bar",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "78",
+        "code": "5759",
+        "name": "Du lịch",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "79",
+        "code": "6535",
+        "name": "Viễn thông cố định",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "80",
+        "code": "6575",
+        "name": "Viễn thông di động",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "81",
+        "code": "7535",
+        "name": "Sản xuất và cung cấp điện truyền thống",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "82",
+        "code": "7537",
+        "name": "Sản xuất và cung cấp điện bằng năng lượng thay thế",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "83",
+        "code": "7573",
+        "name": "Phân phối khí đốt",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "84",
+        "code": "7575",
+        "name": "Đa tiện ích",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "85",
+        "code": "7577",
+        "name": "Cung cấp nước sạch",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "86",
+        "code": "8355",
+        "name": "Ngân hàng",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "87",
+        "code": "8532",
+        "name": "Các công ty bảo hiểm tổng hợp",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "88",
+        "code": "8534",
+        "name": "Môi giới bảo hiểm",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "89",
+        "code": "8536",
+        "name": "Bảo hiểm tài sản và tai nạn",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "90",
+        "code": "8538",
+        "name": "Tái bảo hiểm",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "91",
+        "code": "8575",
+        "name": "Bảo hiểm nhân thọ",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "92",
+        "code": "8581",
+        "name": "Công ty bảo hiểm",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "93",
+        "code": "8633",
+        "name": "Các công ty đầu cơ và phát triển bất động sản",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "94",
+        "code": "8637",
+        "name": "Dịch vụ bất động sản",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "95",
+        "code": "8671",
+        "name": "Tín thác đầu tư bất động sản công nghiệp và văn phòng",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "96",
+        "code": "8672",
+        "name": "Tín thác đầu tư bất động sản bán lẻ",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "97",
+        "code": "8673",
+        "name": "Tín thác đầu tư bất động sản nhà ở",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "98",
+        "code": "8674",
+        "name": "Tín thác đầu tư bất động sản đa dạng",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "99",
+        "code": "8675",
+        "name": "Tín thác đầu tư bất động sản đặc biệt",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "100",
+        "code": "8676",
+        "name": "Tín thác đầu tư bất động sản thế chấp",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "101",
+        "code": "8677",
+        "name": "Tín thác đầu tư bất động sản khách sạn và nhà nghỉ",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "102",
+        "code": "8771",
+        "name": "Quản lý tài sản",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "103",
+        "code": "8773",
+        "name": "Tài chính bán lẻ",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "104",
+        "code": "8775",
+        "name": "Tài chính đặc thù",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "105",
+        "code": "8777",
+        "name": "Chứng khoán",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-12-27 15:40:24"
+      },
+      {
+        "id": "106",
+        "code": "8779",
+        "name": "Tài chính thế chấp",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "107",
+        "code": "8781",
+        "name": "Công ty Chứng khoán",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "108",
+        "code": "8985",
+        "name": "Quỹ đóng",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "109",
+        "code": "8995",
+        "name": "Quỹ mở",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "110",
+        "code": "9533",
+        "name": "Dịch vụ điện toán",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "111",
+        "code": "9535",
+        "name": "Dịch vụ internet",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "112",
+        "code": "9537",
+        "name": "Công nghệ phần mềm",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "113",
+        "code": "9572",
+        "name": "Công nghệ phần cứng",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "114",
+        "code": "9574",
+        "name": "Thiết bị điện tử văn phòng",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "115",
+        "code": "9576",
+        "name": "Thiết bị bán dẫn",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      },
+      {
+        "id": "116",
+        "code": "9578",
+        "name": "Thiết bị viễn thông",
+        "created_at": "2025-05-18 22:47:36",
+        "updated_at": "2025-05-18 22:47:36"
+      }
+    ]
+  }
+]

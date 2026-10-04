@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Livewire\Companies\Index;
 use App\Models\Company;
+use App\Models\Icb;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Livewire\Livewire;
@@ -41,7 +42,7 @@ class CompaniesPageTest extends TestCase
         Company::factory()->create(['ticker' => 'DDC', 'com_group_code' => 'UpcomIndex', 'icb_code' => '3353']);
         Company::factory()->create(['ticker' => 'DDE', 'com_group_code' => 'UpcomIndex', 'icb_code' => '2353'])->delete();
 
-        Livewire::test(Index::class)->set('search', 'dd')->set('exchange', 'UpcomIndex')->set('industry', '2353')
+        Livewire::test(Index::class)->set('search', ' ddb ')->set('exchange', 'UpcomIndex')->set('industry', '2353')
             ->assertViewHas('companies', fn ($companies): bool => $companies->pluck('ticker')->all() === ['DDB']);
     }
 
@@ -55,5 +56,31 @@ class CompaniesPageTest extends TestCase
             ->assertSee('Không thể đồng bộ lúc này')->assertSee('DDB');
 
         $this->assertDatabaseCount('companies', 1);
+    }
+
+    public function test_industry_names_are_displayed_and_filters_still_use_codes(): void
+    {
+        Icb::factory()->create(['code' => '0533', 'name' => 'Thăm dò và sản xuất dầu khí']);
+        Company::factory()->create(['ticker' => 'GAS', 'icb_code' => '0533']);
+        Company::factory()->create(['ticker' => 'FPT', 'icb_code' => '9537']);
+
+        Livewire::test(Index::class)
+            ->assertSee('Thăm dò và sản xuất dầu khí')
+            ->assertSee('<option value="0533">Thăm dò và sản xuất dầu khí</option>', false)
+            ->set('industry', '0533')
+            ->assertViewHas('companies', fn ($companies): bool => $companies->pluck('ticker')->all() === ['GAS']);
+    }
+
+    public function test_unknown_or_deleted_industries_fall_back_to_codes_without_hiding_companies(): void
+    {
+        Icb::factory()->create(['code' => '2353', 'name' => 'Ngành đã xoá'])->delete();
+        Company::factory()->create(['ticker' => 'DDB', 'icb_code' => '2353']);
+        Company::factory()->create(['ticker' => 'ABC', 'icb_code' => 'UNKNOWN']);
+
+        Livewire::test(Index::class)->assertDontSee('Ngành đã xoá')
+            ->assertSee('<option value="2353">2353</option>', false)
+            ->assertSee('<option value="UNKNOWN">UNKNOWN</option>', false)
+            ->set('industry', 'UNKNOWN')
+            ->assertViewHas('companies', fn ($companies): bool => $companies->pluck('ticker')->all() === ['ABC']);
     }
 }

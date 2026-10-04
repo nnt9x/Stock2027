@@ -5,9 +5,18 @@ namespace Database\Factories;
 use App\Models\Company;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/** @extends Factory<Company> */
+/**
+ * Tạo dữ liệu công ty phục vụ kiểm thử.
+ *
+ * @extends Factory<Company>
+ */
 class CompanyFactory extends Factory
 {
+    /**
+     * Tạo ticker duy nhất và thông tin công ty mẫu; test có thể ghi đè theo tình huống.
+     *
+     * @return array<string, string>
+     */
     public function definition(): array
     {
         return [

@@ -26,7 +26,7 @@
                 <x-select.native label="Ngành ICB" wire:model.live="industry">
                     <option value="">Tất cả ngành</option>
                     @foreach ($industries as $code)
-                        <option value="{{ $code }}">{{ $code }}</option>
+                        <option value="{{ $code }}">{{ $industryNames->get($code, $code) }}</option>
                     @endforeach
                 </x-select.native>
             </div>
@@ -37,7 +37,7 @@
                 ['index' => 'organ_name', 'label' => 'Tên doanh nghiệp', 'sortable' => false],
                 ['index' => 'organ_short_name', 'label' => 'Tên viết tắt', 'sortable' => false],
                 ['index' => 'com_group_code', 'label' => 'Sàn', 'sortable' => false],
-                ['index' => 'icb_code', 'label' => 'ICB', 'sortable' => false],
+                ['index' => 'industry_name', 'label' => 'Ngành ICB', 'sortable' => false],
             ]" :rows="$companies" striped loading paginate>
                 @interact('column_com_group_code', $row)
                     {{ ['VNINDEX' => 'HOSE', 'HNXIndex' => 'HNX', 'UpcomIndex' => 'UPCoM'][$row->com_group_code] ?? $row->com_group_code }}

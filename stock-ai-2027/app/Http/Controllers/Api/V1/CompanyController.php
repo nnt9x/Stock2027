@@ -19,7 +19,7 @@ class CompanyController extends Controller
     /**
      * Danh sách công ty.
      *
-     * Lọc theo tiền tố ticker (search), sàn (com_group_code), ngành ICB (icb_code).
+     * Lọc theo ticker chính xác (search), sàn (com_group_code), ngành ICB (icb_code).
      * Kết quả phân trang và không bao gồm công ty đã xoá mềm.
      */
     public function index(ListCompaniesRequest $request, CompanyQueryService $service): AnonymousResourceCollection

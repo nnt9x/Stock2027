@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Company;
+use App\Models\Icb;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -20,7 +21,7 @@ class CompanyApiTest extends TestCase
         Company::factory()->create(['ticker' => 'DDE', 'com_group_code' => 'UpcomIndex', 'icb_code' => '3353']);
         Company::factory()->create(['ticker' => 'DDF', 'com_group_code' => 'UpcomIndex', 'icb_code' => '2353'])->delete();
 
-        $this->getJson('/api/v1/companies?search=dd&com_group_code=UpcomIndex&icb_code=2353&per_page=1')
+        $this->getJson('/api/v1/companies?search=ddb&com_group_code=UpcomIndex&icb_code=2353&per_page=1')
             ->assertOk()->assertJsonCount(1, 'data')->assertJsonPath('data.0.id', $company->id)
             ->assertJsonPath('data.0.ticker', 'DDB')->assertJsonPath('meta.total', 1)
             ->assertJsonPath('meta.per_page', 1)->assertJsonStructure(['data' => [['organ_name', 'organ_short_name']], 'links', 'meta']);
@@ -31,6 +32,42 @@ class CompanyApiTest extends TestCase
         Company::factory()->create(['ticker' => 'FPT']);
 
         $this->getJson('/api/v1/companies/fpt')->assertOk()->assertJsonPath('data.ticker', 'FPT');
+    }
+
+    public function test_list_and_detail_include_industry_names_and_readable_vietnamese(): void
+    {
+        Icb::factory()->create(['code' => '8355', 'name' => 'Ngân hàng']);
+        Company::factory()->create(['ticker' => 'ACB', 'icb_code' => '8355',
+            'organ_name' => 'Ngân hàng Thương mại Cổ phần Á Châu']);
+
+        $this->getJson('/api/v1/companies/ACB')->assertOk()
+            ->assertJsonPath('data.icb_code', '8355')->assertJsonPath('data.icb_name', 'Ngân hàng')
+            ->assertSee('Ngân hàng Thương mại Cổ phần Á Châu', false);
+        $this->getJson('/api/v1/companies?search=ACB')->assertOk()
+            ->assertJsonPath('data.0.icb_name', 'Ngân hàng')->assertSee('Ngân hàng', false);
+    }
+
+    public function test_unknown_or_deleted_industries_return_null_names_and_preserve_codes(): void
+    {
+        Icb::factory()->create(['code' => '8355'])->delete();
+        Company::factory()->create(['ticker' => 'ACB', 'icb_code' => '8355']);
+        Company::factory()->create(['ticker' => 'ABC', 'icb_code' => 'UNKNOWN']);
+
+        $this->getJson('/api/v1/companies/ACB')->assertOk()
+            ->assertJsonPath('data.icb_code', '8355')->assertJsonPath('data.icb_name', null);
+        $this->getJson('/api/v1/companies/ABC')->assertOk()
+            ->assertJsonPath('data.icb_code', 'UNKNOWN')->assertJsonPath('data.icb_name', null);
+    }
+
+    public function test_search_requires_an_exact_ticker_and_does_not_treat_wildcards_as_patterns(): void
+    {
+        Company::factory()->create(['ticker' => 'FPT']);
+        Company::factory()->create(['ticker' => 'FPTX']);
+
+        $this->getJson('/api/v1/companies?search=fpt')->assertOk()
+            ->assertJsonCount(1, 'data')->assertJsonPath('data.0.ticker', 'FPT');
+        $this->getJson('/api/v1/companies?search=FP')->assertOk()->assertJsonCount(0, 'data');
+        $this->getJson('/api/v1/companies?search=FPT%25')->assertOk()->assertJsonCount(0, 'data');
     }
 
     public function test_missing_and_soft_deleted_companies_return_404(): void

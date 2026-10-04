@@ -10,8 +10,20 @@ use Illuminate\Support\Facades\DB;
 
 class CompanySyncService
 {
+    /**
+     * Nhận client SSI qua dependency injection, tách kết nối bên ngoài khỏi nghiệp vụ đồng bộ.
+     */
     public function __construct(private SsiCompanyClient $client) {}
 
+    /**
+     * Đồng bộ danh sách SSI theo ticker, thêm mới hoặc cập nhật dữ liệu trong transaction.
+     * Gọi API trước khi mở transaction để tránh giữ khoá database trong lúc chờ mạng.
+     * Giữ ID, created_at và trạng thái xoá mềm; không xoá công ty vắng trong nguồn.
+     * Khoá cache ngăn chạy trùng và luôn được giải phóng khi hoàn tất hoặc phát sinh lỗi.
+     * Trả số bản ghi nguồn đã xử lý, không phải số bản ghi mới được thêm.
+     *
+     * @throws CompanySyncInProgressException Khi có một lần đồng bộ khác đang chạy.
+     */
     public function sync(): int
     {
         $lock = Cache::lock('companies:sync', 120);

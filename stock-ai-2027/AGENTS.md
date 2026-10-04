@@ -161,3 +161,10 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 - Prefer existing TallStackUI components and built-in features over handwritten tables, selects, pagination, loading controls, or equivalent UI behavior.
 - Before implementing UI, read the relevant installed component instructions in `vendor/tallstackui/tallstackui/.ai/`; use the TallStackUI documentation MCP when available.
 - Keep Blade and custom styling small. Use documented props, slots, and customization features. Do not create new custom UI components unless the user requests them.
+
+## Project PHP comments: Vietnamese explanations
+
+- Write human-readable PHP comments and PHPDoc explanations in Vietnamese so the code is easy to read and maintain. Preserve standard PHPDoc tags, type names, and identifiers such as `@param`, `@return`, `@use`, and `@extends`.
+- When creating or modifying methods, business operations, or Eloquent relationships, include a concise Vietnamese explanation of their purpose. For relationships, explain the mapped columns and relevant behavior when related records are missing or soft deleted.
+- A PHPDoc block containing only a type tag is not sufficient for a method or relationship. Put the Vietnamese explanation before the type tags.
+- Explain non-obvious decisions and constraints rather than narrating every statement. Prefer PHPDoc blocks and keep inline comments limited to code that needs clarification.

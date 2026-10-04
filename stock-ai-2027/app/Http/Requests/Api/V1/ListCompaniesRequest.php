@@ -6,11 +6,19 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ListCompaniesRequest extends FormRequest
 {
+    /**
+     * Cho phép truy cập danh sách công ty công khai theo cơ chế API hiện tại.
+     */
     public function authorize(): bool
     {
         return true;
     }
 
+    /**
+     * Kiểm tra bộ lọc và phân trang của API, giới hạn tối đa 100 công ty mỗi trang.
+     *
+     * @return array<string, list<string>>
+     */
     public function rules(): array
     {
         return [

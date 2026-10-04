@@ -11,7 +11,18 @@ use Throwable;
 
 class SsiCompanyClient
 {
-    /** @return list<array{ticker: string, comGroupCode: string, icbCode: string, organName: string, organShortName: string}> */
+    /**
+     * Tải danh sách công ty tiếng Việt từ SSI mà không dùng cookie.
+     * Giới hạn thời gian kết nối/phản hồi và chỉ thử lại khi lỗi mạng, HTTP 429 hoặc 5xx.
+     * Kiểm tra trạng thái, số lượng, trường bắt buộc và ticker trùng trước khi trả dữ liệu.
+     * Dữ liệu giữ tên trường của nguồn; service đồng bộ chịu trách nhiệm ánh xạ sang database.
+     *
+     * @return list<array{ticker: string, comGroupCode: string, icbCode: string, organName: string, organShortName: string}>
+     *
+     * @throws CompanySyncException Khi dữ liệu nguồn không hợp lệ hoặc không đầy đủ.
+     * @throws ConnectionException Khi không thể kết nối SSI.
+     * @throws RequestException Khi SSI trả mã HTTP lỗi.
+     */
     public function organizations(): array
     {
         $payload = Http::acceptJson()
