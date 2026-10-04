@@ -36,6 +36,7 @@
                     </x-slot:brand-collapsed>
                     <x-side-bar.item text="Trang chủ" icon="home" :route="url('/')" :current="request()->is('/')" />
                     <x-side-bar.item text="Công ty" icon="building-office" :route="route('companies.index')" :current="request()->routeIs('companies.index')" />
+                    <x-side-bar.item text="Phân tích" icon="chart-bar" :route="route('analysis.index')" :current="request()->routeIs('analysis.index', 'companies.chart')" />
                     <x-side-bar.item text="Giám sát queue" icon="queue-list" :route="route('queues.index')" :current="request()->routeIs('queues.index')" />
                     <x-side-bar.item text="API Reference" icon="code-bracket" :href="url('/scalar')" />
                 </x-side-bar>
