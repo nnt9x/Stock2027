@@ -33,6 +33,9 @@ class ApiDocumentationTest extends TestCase
         $this->assertSame(['search', 'com_group_code', 'icb_code', 'per_page', 'page'],
             array_column($document['paths']['/v1/companies']['get']['parameters'], 'name'));
         $this->assertArrayHasKey('CompanyResource', $document['components']['schemas']);
+        $this->assertArrayHasKey('get', $document['paths']['/v1/icbs']);
+        $this->assertArrayHasKey('get', $document['paths']['/v1/icbs/{code}']);
+        $this->assertArrayHasKey('IcbResource', $document['components']['schemas']);
     }
 
     public function test_docs_are_restricted_outside_local_without_the_docs_gate(): void

@@ -10,10 +10,12 @@ use App\Services\CompanySyncService;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
+use TallStackUi\Traits\Interactions;
 use Throwable;
 
 class Index extends Component
 {
+    use Interactions;
     use WithPagination;
 
     public string $search = '';
@@ -21,10 +23,6 @@ class Index extends Component
     public string $exchange = '';
 
     public string $industry = '';
-
-    public ?string $successMessage = null;
-
-    public ?string $errorMessage = null;
 
     protected CompanyQueryService $companies;
 
@@ -52,18 +50,15 @@ class Index extends Component
      */
     public function sync(CompanySyncService $service): void
     {
-        $this->successMessage = null;
-        $this->errorMessage = null;
-
         try {
             $count = $service->sync();
             $this->resetPage();
-            $this->successMessage = 'Đã đồng bộ '.number_format($count).' công ty từ SSI.';
+            $this->toast()->success('Đã đồng bộ '.number_format($count).' công ty từ SSI.')->send();
         } catch (CompanySyncException $exception) {
-            $this->errorMessage = $exception->getMessage();
+            $this->toast()->error($exception->getMessage())->send();
         } catch (Throwable $exception) {
             report($exception);
-            $this->errorMessage = 'Không thể đồng bộ lúc này. Vui lòng thử lại sau.';
+            $this->toast()->error('Không thể đồng bộ lúc này. Vui lòng thử lại sau.')->send();
         }
     }
 

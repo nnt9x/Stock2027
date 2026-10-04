@@ -11,8 +11,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body x-bind:class="{ dark: darkTheme }" {{ $attributes->class(['min-h-screen bg-gray-50 font-sans text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100']) }}>
-        <x-toast />
-        <x-dialog />
+
         <x-layout>
             <x-slot:header>
                 <x-layout.header>
@@ -38,13 +37,12 @@
                     <x-side-bar.item text="Trang chủ" icon="home" :route="url('/')" :current="request()->is('/')" />
                     <x-side-bar.item text="Công ty" icon="building-office" :route="route('companies.index')" :current="request()->routeIs('companies.index')" />
                     <x-side-bar.item text="API Reference" icon="code-bracket" :href="url('/scalar')" />
-                    <x-slot:footer>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">StockAI 2027</p>
-                    </x-slot:footer>
                 </x-side-bar>
             </x-slot:menu>
             {{ $slot }}
         </x-layout>
+        <x-toast />
+        <x-dialog />
         @livewireScripts
     </body>
 </html>

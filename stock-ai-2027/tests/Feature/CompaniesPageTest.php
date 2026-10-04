@@ -29,8 +29,10 @@ class CompaniesPageTest extends TestCase
             ],
         ])]);
 
-        Livewire::test(Index::class)->call('sync')->assertSet('errorMessage', null)
-            ->assertSee('Đã đồng bộ 1 công ty')->assertSee('Doanh nghiệp Đông Dương');
+        Livewire::test(Index::class)->call('sync')
+            ->assertDispatched('ts-ui:toast', fn (string $event, array $data): bool => $data['type'] === 'success'
+                && $data['title'] === 'Đã đồng bộ 1 công ty từ SSI.')
+            ->assertSee('Doanh nghiệp Đông Dương');
 
         $this->assertDatabaseHas('companies', ['ticker' => 'DDB']);
     }
@@ -52,8 +54,10 @@ class CompaniesPageTest extends TestCase
         Http::preventStrayRequests();
         Http::fake(['fiin-core.ssi.com.vn/Master/GetListOrganization*' => Http::response([], 403)]);
 
-        Livewire::test(Index::class)->call('sync')->assertSet('successMessage', null)
-            ->assertSee('Không thể đồng bộ lúc này')->assertSee('DDB');
+        Livewire::test(Index::class)->call('sync')
+            ->assertDispatched('ts-ui:toast', fn (string $event, array $data): bool => $data['type'] === 'error'
+                && $data['title'] === 'Không thể đồng bộ lúc này. Vui lòng thử lại sau.')
+            ->assertSee('DDB');
 
         $this->assertDatabaseCount('companies', 1);
     }

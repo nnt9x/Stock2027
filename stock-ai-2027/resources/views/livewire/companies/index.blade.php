@@ -6,13 +6,6 @@
         </x-button>
     </div>
 
-    @if ($successMessage)
-        <div role="status"><x-alert color="green" :text="$successMessage" /></div>
-    @endif
-    @if ($errorMessage)
-        <div role="alert"><x-alert color="red" :text="$errorMessage" /></div>
-    @endif
-
     <x-card>
         <div class="flex flex-col gap-5">
             <div class="grid gap-4 md:grid-cols-3">
