@@ -4,6 +4,7 @@ namespace App\Livewire\Companies;
 
 use App\Models\Company;
 use App\Models\Ohlcv;
+use App\Services\FibonacciPivotService;
 use App\Services\OhlcvQueryService;
 use App\Services\TechnicalIndicatorQueryService;
 use Illuminate\Contracts\View\View;
@@ -64,7 +65,7 @@ class Chart extends Component
     }
 
     /** Ghép chỉ báo đã lưu theo timestamp của nến; thiếu kết quả giữ null, không tự tính ở UI. */
-    public function render(OhlcvQueryService $prices, TechnicalIndicatorQueryService $indicators): View
+    public function render(OhlcvQueryService $prices, TechnicalIndicatorQueryService $indicators, FibonacciPivotService $pivots): View
     {
         $resolution = in_array($this->resolution, ['1D', '1H'], true) ? $this->resolution : '1D';
         $source = $prices->candles($this->ticker, $resolution);
@@ -91,7 +92,28 @@ class Chart extends Component
             ->prepend(['value' => 'VN30', 'label' => 'VN30 · Chỉ số thị trường'])
             ->prepend(['value' => 'VNINDEX', 'label' => 'VNINDEX · Chỉ số thị trường'])->all();
 
-        return view('livewire.companies.chart', ['candles' => $candles, 'tickerOptions' => $tickerOptions])
+        $pivot = $pivots->monthly($this->ticker);
+        $pivotHeaders = [['index' => 'level', 'label' => 'Mức', 'sortable' => false]];
+        foreach (array_keys($pivot['months']) as $index => $month) {
+            $pivotHeaders[] = ['index' => 'month_'.$index, 'label' => substr($month, 5).'-'.substr($month, 0, 4), 'sortable' => false, 'align' => 'right'];
+        }
+        $pivotHeaders[] = ['index' => 'deviation', 'label' => 'Độ lệch', 'sortable' => false, 'align' => 'right'];
+        $pivotHeaders[] = ['index' => 'forward', 'label' => '(F) '.substr($pivot['forward_month'], 5).'-'.substr($pivot['forward_month'], 0, 4), 'sortable' => false, 'align' => 'right'];
+        $pivotRows = [];
+        foreach (FibonacciPivotService::LEVELS as $level) {
+            $row = ['level' => $level];
+            foreach (array_values($pivot['months']) as $index => $levels) {
+                $row['month_'.$index] = $levels[$level] ?? null;
+            }
+            $value = $pivot['months'][$pivot['current_month']][$level] ?? null;
+            $row['deviation'] = $value === null || ! $pivot['reference_close'] ? null : ($value / $pivot['reference_close'] - 1) * 100;
+            $row['forward'] = $pivot['forward_levels'][$level] ?? null;
+            $row['forward_deviation'] = $row['forward'] === null || ! $pivot['reference_close'] ? null : ($row['forward'] / $pivot['reference_close'] - 1) * 100;
+            $pivotRows[] = $row;
+        }
+
+        return view('livewire.companies.chart', ['candles' => $candles, 'tickerOptions' => $tickerOptions,
+            'pivot' => $pivot, 'pivotHeaders' => $pivotHeaders, 'pivotRows' => $pivotRows])
             ->layout('components.layouts.app', ['title' => 'Phân tích']);
     }
 }

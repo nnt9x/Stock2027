@@ -6,10 +6,10 @@ const smaDefinitions = [
 ];
 const paneDefinitions = [
     { title: 'RSI 14', fields: [['rsi_14', 'RSI14', '#a855f7']], levels: [30, 50, 70], fixed: true },
-    { title: 'RSI 50 · MA10', fields: [['rsi_50', 'RSI50', '#a855f7'], ['rsi_50_ma_10', 'MA10', '#f59e0b']], levels: [30, 50, 70], fixed: true },
-    { title: 'CCI 20 · MA10', fields: [['cci_20', 'CCI20', '#f59e0b'], ['cci_20_ma10', 'MA10', '#a855f7']], levels: [-100, 0, 100] },
-    { title: 'OBV · MA10', fields: [['obv', 'OBV', '#0ea5e9'], ['obv_ma10', 'MA10', '#a855f7']], volume: true },
-    { title: 'RSLine · SMA10', fields: [['rs_line', 'RSLine', '#0ea5e9'], ['rs_line_sma_10', 'SMA10', '#f59e0b']] },
+    { title: 'RSI 50', fields: [['rsi_50', 'RSI50', '#a855f7'], ['rsi_50_ma_10', 'MA10', '#f59e0b']], levels: [30, 50, 70], fixed: true },
+    { title: 'CCI 20', fields: [['cci_20', 'CCI20', '#f59e0b'], ['cci_20_ma10', 'MA10', '#a855f7']], levels: [-100, 0, 100] },
+    { title: 'OBV', fields: [['obv', 'OBV', '#0ea5e9'], ['obv_ma10', 'MA10', '#a855f7']], volume: true },
+    { title: 'RSLine', fields: [['rs_line', 'RSLine', '#0ea5e9'], ['rs_line_sma_10', 'SMA10', '#f59e0b']] },
 ];
 
 // Đối tượng chart nằm trong closure, tránh Alpine proxy các API canvas của thư viện.
@@ -112,12 +112,12 @@ window.stockPriceChart = (data, resolution) => {
                 });
                 chart.panes().forEach((pane, index) => pane.setStretchFactor(index === 0 ? 3 : 1));
                 chart.timeScale().setVisibleLogicalRange({ from: Math.max(0, data.length - 200), to: data.length + 5 });
-                const item = (field, name, color, isVolume = false) => ({ field, label: name, color, isVolume, value: '—', visible: true });
-                this.panels = [{ title: 'Giá & khối lượng', top: 8, items: [
-                    item('volume', 'Volume', '#0ea5e9', true), item('volume_sma_20', 'SMA20 vol', '#0ea5e9', true),
+                const item = (field, name, color, isVolume = false) => ({ field, label: name, color, isVolume, value: '—', visible: true, showLabel: true });
+                this.panels = [{ title: '', top: 8, items: [
+                    item('volume', 'KL', '#0ea5e9', true), item('volume_sma_20', 'KL SMA20', '#0ea5e9', true),
                     ...this.averages.map((average) => item(average.field, average.label, average.color)),
                 ] }, ...paneDefinitions.map((pane) => ({ title: pane.title, top: 8,
-                    items: pane.fields.map(([field, name, color]) => item(field, name, color, pane.volume)) }))];
+                    items: pane.fields.map(([field, name, color], index) => ({ ...item(field, name, color, pane.volume), showLabel: index > 0 })) }))];
                 this.refreshLayout();
                 this.show(latest);
                 chart.subscribeCrosshairMove((event) => this.schedule(event.time ? byTime.get(key(event.time)) ?? latest : latest));
