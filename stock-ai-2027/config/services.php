@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'dnse' => [
+        'base_url' => env('DNSE_BASE_URL', 'https://api.dnse.com.vn'),
+    ],
     'ssi' => [
         'base_url' => env('SSI_BASE_URL', 'https://fiin-core.ssi.com.vn'),
         'token' => env('SSI_USER_TOKEN', 'x'),
