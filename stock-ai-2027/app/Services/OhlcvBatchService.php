@@ -60,7 +60,11 @@ class OhlcvBatchService
 
             return Bus::batch($jobs)
                 ->name('OHLCV '.($ticker ?? 'toàn thị trường').' '.($full ? 'full' : 'incremental').' '.now()->toIso8601String())
-                ->onQueue('ohlcv')->allowFailures()->dispatch();
+                ->withOption('until', $until)->withOption('tickers', array_values(array_unique($tickers)))
+                ->onQueue('ohlcv')->allowFailures()
+                ->finally(static function (Batch $batch): void {
+                    app(IndicatorBatchService::class)->dispatchForPriceBatch($batch->id);
+                })->dispatch();
         } finally {
             $lock->release();
         }

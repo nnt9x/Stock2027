@@ -131,6 +131,7 @@ class OhlcvSyncService
                 } else {
                     $current->synced_through_timestamp = max($current->synced_through_timestamp ?? 0, $to);
                 }
+                $current->data_version++;
                 $current->last_success_at = now();
                 $current->last_error = null;
                 $current->save();

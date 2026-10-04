@@ -1,0 +1,22 @@
+[project]
+name = "worker-indicator"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi>=0.142.2",
+    "granian>=2.8.4",
+    "numpy>=2.5.3",
+    "pymysql>=1.2.3",
+    "python-dotenv>=1.2.4",
+    "ta-lib>=0.8.1",
+]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=9.1.1",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

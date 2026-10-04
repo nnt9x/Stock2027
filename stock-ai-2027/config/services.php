@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'indicators' => [
+        'base_url' => env('INDICATOR_API_URL', 'http://127.0.0.1:8001'),
+        'token' => env('INDICATOR_API_TOKEN'),
+        'benchmark' => env('INDICATOR_BENCHMARK', 'VNINDEX'),
+    ],
     'dnse' => [
         'base_url' => env('DNSE_BASE_URL', 'https://api.dnse.com.vn'),
     ],

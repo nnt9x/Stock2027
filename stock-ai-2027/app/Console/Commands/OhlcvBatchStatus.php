@@ -9,14 +9,14 @@ class OhlcvBatchStatus extends Command
 {
     protected $signature = 'ohlcv:batch {id : ID batch cần xem} {--cancel : Hủy các job chưa bắt đầu của batch}';
 
-    protected $description = 'Xem tiến độ hoặc hủy batch đồng bộ OHLCV';
+    protected $description = 'Xem tiến độ hoặc hủy batch giá/chỉ báo';
 
     /** Hiển thị thống kê native của Laravel; job đang gọi HTTP sẽ dừng ở lượt xử lý kế tiếp. */
     public function handle(): int
     {
         $batch = Bus::findBatch((string) $this->argument('id'));
-        if (! $batch || ! str_starts_with($batch->name, 'OHLCV ')) {
-            $this->error('Không tìm thấy batch OHLCV.');
+        if (! $batch || (! str_starts_with($batch->name, 'OHLCV ') && ! str_starts_with($batch->name, 'Indicators '))) {
+            $this->error('Không tìm thấy batch giá hoặc chỉ báo.');
 
             return self::FAILURE;
         }
@@ -32,6 +32,10 @@ class OhlcvBatchStatus extends Command
             $batch->id, $batch->name, $batch->totalJobs, $batch->processedJobs(), $batch->pendingJobs - $batch->failedJobs, $batch->failedJobs,
             $batch->progress().'%', $status,
         ]]);
+
+        if ($child = $batch->options['indicator_batch_id'] ?? null) {
+            $this->info('Batch chỉ báo: '.$child);
+        }
 
         return self::SUCCESS;
     }

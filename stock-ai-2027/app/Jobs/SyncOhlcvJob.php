@@ -66,6 +66,8 @@ class SyncOhlcvJob implements ShouldBeUnique, ShouldQueue
             ->whereColumn('reload_version', '>', 'completed_reload_version')->exists();
         if ($pending && $service->syncStep($this->ticker, $other, $this->until)) {
             $this->release(2);
+
+            return;
         }
     }
 }

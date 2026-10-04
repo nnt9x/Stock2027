@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['ticker', 'resolution', 'synced_through_timestamp', 'reload_through_timestamp', 'reload_version', 'completed_reload_version', 'last_success_at', 'last_error'])]
+#[Fillable(['ticker', 'resolution', 'synced_through_timestamp', 'reload_through_timestamp', 'reload_version', 'completed_reload_version', 'last_success_at', 'last_error', 'data_version'])]
 class OhlcvSyncState extends Model
 {
     /**
@@ -16,6 +16,7 @@ class OhlcvSyncState extends Model
     protected function casts(): array
     {
         return [
+            'data_version' => 'integer',
             'synced_through_timestamp' => 'integer',
             'reload_through_timestamp' => 'integer',
             'reload_version' => 'integer',
