@@ -75,7 +75,9 @@ Batch đồng bộ giá mới tự tạo batch chỉ báo sau khi kết thúc, c
 - Ngày giao dịch tính theo múi giờ `Asia/Ho_Chi_Minh` (UTC+7).
 - RSLine = giá đóng cửa / giá benchmark × 100; ghép theo ngày hoặc ngày/giờ Việt Nam. Thiếu benchmark thì RSLine để `NULL`.
 - Thiếu lịch sử cho một chỉ báo thì để `NULL`.
-- Tính lại dùng upsert, không tạo dòng trùng; chỉ báo cũ ứng với nến volume 0 được xóa trong cùng transaction. Dữ liệu OHLCV nguồn vẫn được giữ.
+- Mặc định tính incremental: nối phần mới và tính lại nến cuối, dùng checkpoint RSI Wilder/OBV và cửa sổ tối đa 201 nến lưu trong `ohlcv_sync_states.indicator_state`. Không ghi lại toàn lịch sử.
+- Lần đầu, khi giá/khối lượng lịch sử được tải lại hoặc benchmark đổi phiên bản tải lại, tự tính full để khởi tạo lại checkpoint. Dữ liệu chỉ báo cũ chưa có checkpoint cần một lượt full đầu tiên.
+- Upsert theo lô, không tạo dòng trùng; chỉ báo cũ ứng với nến volume 0 trong phạm vi xử lý được xóa cùng transaction. Giá nguồn vẫn được giữ.
 
 ## Kiểm thử
 

@@ -20,7 +20,7 @@ class CalculateIndicatorsJob implements ShouldQueue
 
     public array $backoff = [15, 60, 180];
 
-    /** Một job tính lại toàn bộ lịch sử của một mã/khung, PHP chỉ điều phối HTTP. */
+    /** Một job nối tiếp chỉ báo của một mã/khung; Python tự tính full khi cần khởi tạo hoặc giá điều chỉnh. */
     public function __construct(public string $ticker, public string $resolution, public int $until, public string $runId, public ?string $priceBatchId = null)
     {
         $this->onQueue('indicators');

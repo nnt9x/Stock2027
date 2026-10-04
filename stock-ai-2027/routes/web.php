@@ -8,3 +8,4 @@ Route::get('/', function () {
 });
 
 Route::get('/companies', Index::class)->name('companies.index');
+Route::get('/queues', App\Livewire\Queues\Index::class)->name('queues.index');

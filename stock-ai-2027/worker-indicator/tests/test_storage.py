@@ -2,6 +2,7 @@
 
 import os
 import uuid
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
@@ -49,7 +50,7 @@ def request():
 def test_retry_upserts_without_duplicate_rows(mysql):
     first = storage.execute(request())
     assert first["rows_processed"] == 501
-    assert storage.execute(request()) == first
+    assert storage.execute(request())["rows_processed"] == 1
     with mysql.cursor() as cursor:
         cursor.execute("SELECT COUNT(*) AS n FROM technical_indicators")
         assert cursor.fetchone()["n"] == 501
@@ -69,6 +70,7 @@ def test_recalculation_removes_old_zero_volume_indicator(mysql):
     storage.execute(request())
     with mysql.cursor() as cursor:
         cursor.execute("UPDATE ohlcvs SET volume=0 ORDER BY timestamp LIMIT 1")
+        cursor.execute("UPDATE ohlcv_sync_states SET completed_reload_version=1,reload_version=1")
     mysql.commit()
     assert storage.execute(request())["rows_processed"] == 500
     mysql.commit()  # Mở snapshot mới để đọc kết quả worker đã commit.
@@ -103,3 +105,43 @@ def test_other_worker_lock_returns_retryable_conflict(mysql):
     finally:
         with mysql.cursor() as cursor:
             cursor.execute("SELECT RELEASE_LOCK('indicator:ACB:1D')")
+
+
+def test_parallel_tickers_with_zero_volume_cleanup(mysql):
+    """Nhiều mã tính/xóa nến volume 0 đồng thời không tranh chấp phạm vi index."""
+    tickers = ["AAA", "BBB", "CCC", "DDD"]
+    with mysql.cursor() as cursor:
+        for ticker in tickers:
+            cursor.execute("INSERT INTO ohlcv_sync_states (ticker,resolution,synced_through_timestamp,data_version) VALUES (%s,'1D',1791103422,1)", (ticker,))
+            cursor.execute("INSERT INTO ohlcvs (ticker,resolution,timestamp,trading_date,open,high,low,close,volume) SELECT %s,resolution,timestamp,trading_date,open,high,low,close,volume FROM ohlcvs WHERE ticker='ACB'", (ticker,))
+    mysql.commit()
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        assert all(result["rows_processed"] == 501 for result in pool.map(storage.execute, [{**request(), "ticker": ticker} for ticker in tickers]))
+    with mysql.cursor() as cursor:
+        cursor.execute("UPDATE ohlcvs SET volume=0 WHERE ticker <> 'ACB' AND timestamp=(SELECT first_timestamp FROM (SELECT MIN(timestamp) AS first_timestamp FROM ohlcvs) t)")
+    with mysql.cursor() as cursor:
+        cursor.execute("UPDATE ohlcv_sync_states SET completed_reload_version=1,reload_version=1")
+    mysql.commit()
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        assert all(result["rows_processed"] == 500 for result in pool.map(storage.execute, [{**request(), "ticker": ticker} for ticker in tickers]))
+
+
+def test_incremental_only_writes_tail_and_reload_rebuilds(mysql):
+    """Chạy lại chỉ ghi nến cuối/mới; tải lại lịch sử buộc tính full và giữ kết quả TA-Lib."""
+    assert storage.execute(request())["mode"] == "full"
+    with mysql.cursor() as cursor:
+        cursor.execute("UPDATE technical_indicators SET updated_at='2000-01-01 00:00:00'")
+        cursor.execute("INSERT INTO ohlcvs (ticker,resolution,timestamp,trading_date,open,high,low,close,volume) SELECT ticker,resolution,timestamp+86400,DATE_ADD(trading_date,INTERVAL 1 DAY),open,high,low,close+1,volume FROM ohlcvs ORDER BY timestamp DESC LIMIT 1")
+    mysql.commit()
+    result = storage.execute(request())
+    assert result["mode"] == "incremental"
+    assert result["rows_processed"] == 2
+    mysql.commit()
+    with mysql.cursor() as cursor:
+        cursor.execute("SELECT COUNT(*) AS n FROM technical_indicators WHERE updated_at='2000-01-01 00:00:00'")
+        assert cursor.fetchone()["n"] == 500
+        cursor.execute("UPDATE ohlcv_sync_states SET completed_reload_version=1,reload_version=1")
+    mysql.commit()
+    result = storage.execute(request())
+    assert result["mode"] == "full"
+    assert result["rows_processed"] == 502

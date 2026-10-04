@@ -57,7 +57,7 @@ class IndicatorBatchService
         });
     }
 
-    /** Tính lại từ giá đã lưu, bỏ chuỗi lỗi hoặc chưa hoàn tất tải lại lịch sử. */
+    /** Cập nhật chỉ báo từ giá đã lưu theo checkpoint, bỏ chuỗi lỗi hoặc chưa hoàn tất tải lại lịch sử. */
     public function dispatchStored(?string $ticker = null): Batch
     {
         $runId = (string) Str::uuid();

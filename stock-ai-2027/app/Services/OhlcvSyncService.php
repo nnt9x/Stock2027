@@ -91,9 +91,14 @@ class OhlcvSyncService
             $existing = Ohlcv::where('ticker', $ticker)->where('resolution', $resolution)
                 ->whereIn('timestamp', array_column($rows, 'timestamp'))->get()->keyBy('timestamp');
             $adjusted = false;
+            $volumeChanged = false;
             foreach ($rows as $row) {
                 $old = $existing->get($row['timestamp']);
                 if (! $reload && $old && $row['timestamp'] < $today) {
+                    // Khối lượng sửa lại cũng ảnh hưởng OBV và checkpoint chỉ báo lịch sử.
+                    if ((int) $old->volume !== $row['volume']) {
+                        $volumeChanged = true;
+                    }
                     foreach (['open', 'high', 'low', 'close'] as $field) {
                         if (number_format((float) $old->$field, 6, '.', '') !== $row[$field]) {
                             $adjusted = true;
@@ -114,7 +119,7 @@ class OhlcvSyncService
             }
             unset($row);
 
-            return DB::transaction(function () use ($state, $rows, $reload, $to, $until): bool {
+            return DB::transaction(function () use ($state, $rows, $reload, $to, $until, $volumeChanged): bool {
                 $current = OhlcvSyncState::whereKey($state->id)->lockForUpdate()->firstOrFail();
                 if ($current->reload_version !== $state->reload_version) {
                     return true;
@@ -130,6 +135,9 @@ class OhlcvSyncService
                     }
                 } else {
                     $current->synced_through_timestamp = max($current->synced_through_timestamp ?? 0, $to);
+                }
+                if ($volumeChanged) {
+                    $current->indicator_state = null;
                 }
                 $current->data_version++;
                 $current->last_success_at = now();
