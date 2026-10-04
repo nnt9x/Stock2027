@@ -1,0 +1,15 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "php",
+            "args": [
+                "artisan",
+                "boost:mcp"
+            ]
+        },
+        "tallstackui": {
+            "type": "http",
+            "url": "https://tallstackui.com/mcp/tallstackui"
+        }
+    }
+}

@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'ssi' => [
+        'base_url' => env('SSI_BASE_URL', 'https://fiin-core.ssi.com.vn'),
+        'token' => env('SSI_USER_TOKEN', 'x'),
+    ],
 
     /*
     |--------------------------------------------------------------------------
