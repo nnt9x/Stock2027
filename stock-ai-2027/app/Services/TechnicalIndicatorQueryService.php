@@ -8,6 +8,17 @@ use InvalidArgumentException;
 
 class TechnicalIndicatorQueryService
 {
+    /** Các mốc ROC theo số phiên có giao dịch, dùng cho bảng tổng quan khung ngày. */
+    public const ROC_PERIODS = [5, 10, 20, 50, 100, 150, 200];
+
+    /** Lấy ROC ngày đã tính gần nhất của đúng mã; null biểu thị chưa đủ phiên hoặc chưa tính. */
+    public function latestDailyRoc(string $ticker): ?TechnicalIndicator
+    {
+        return TechnicalIndicator::where('ticker', strtoupper(trim($ticker)))->where('resolution', '1D')
+            ->orderByDesc('timestamp')->first(['trading_date', 'timestamp',
+                ...array_map(fn (int $period): string => 'roc_'.$period, self::ROC_PERIODS)]);
+    }
+
     /** Các trường đã lưu được hỗ trợ trên biểu đồ nhiều pane. */
     public const CHART_FIELDS = ['sma_5', 'sma_10', 'sma_20', 'sma_50', 'sma_100', 'sma_150', 'sma_200',
         'rsi_14', 'rsi_50', 'rsi_50_ma_10', 'cci_20', 'cci_20_ma10', 'obv', 'obv_ma10',

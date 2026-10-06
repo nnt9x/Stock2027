@@ -38,7 +38,7 @@ class FibonacciPivotTest extends TestCase
         $this->assertSame(26.0, $result['reference_close']);
         $this->assertSame('2026-10-02', $result['reference_date']);
         Livewire::test(Chart::class)->assertSee('Pivot · Fibonacci')->assertSee('(F) 11-2026')
-            ->assertViewHas('pivotRows', fn ($rows) => count($rows) === 9 && $rows[4]['level'] === 'PP')
+            ->assertSee('R4')->assertSee('PP')->assertSee('S4')
             ->set('resolution', '1H')->assertViewHas('pivot', fn ($pivot) => $pivot['months']['2026-10']['PP'] === 25.0);
     }
 

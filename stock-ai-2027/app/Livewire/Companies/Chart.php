@@ -93,27 +93,10 @@ class Chart extends Component
             ->prepend(['value' => 'VNINDEX', 'label' => 'VNINDEX · Chỉ số thị trường'])->all();
 
         $pivot = $pivots->monthly($this->ticker);
-        $pivotHeaders = [['index' => 'level', 'label' => 'Mức', 'sortable' => false]];
-        foreach (array_keys($pivot['months']) as $index => $month) {
-            $pivotHeaders[] = ['index' => 'month_'.$index, 'label' => substr($month, 5).'-'.substr($month, 0, 4), 'sortable' => false, 'align' => 'right'];
-        }
-        $pivotHeaders[] = ['index' => 'deviation', 'label' => 'Độ lệch', 'sortable' => false, 'align' => 'right'];
-        $pivotHeaders[] = ['index' => 'forward', 'label' => '(F) '.substr($pivot['forward_month'], 5).'-'.substr($pivot['forward_month'], 0, 4), 'sortable' => false, 'align' => 'right'];
-        $pivotRows = [];
-        foreach (FibonacciPivotService::LEVELS as $level) {
-            $row = ['level' => $level];
-            foreach (array_values($pivot['months']) as $index => $levels) {
-                $row['month_'.$index] = $levels[$level] ?? null;
-            }
-            $value = $pivot['months'][$pivot['current_month']][$level] ?? null;
-            $row['deviation'] = $value === null || ! $pivot['reference_close'] ? null : ($value / $pivot['reference_close'] - 1) * 100;
-            $row['forward'] = $pivot['forward_levels'][$level] ?? null;
-            $row['forward_deviation'] = $row['forward'] === null || ! $pivot['reference_close'] ? null : ($row['forward'] / $pivot['reference_close'] - 1) * 100;
-            $pivotRows[] = $row;
-        }
 
         return view('livewire.companies.chart', ['candles' => $candles, 'tickerOptions' => $tickerOptions,
-            'pivot' => $pivot, 'pivotHeaders' => $pivotHeaders, 'pivotRows' => $pivotRows])
+            'pivot' => $pivot, 'roc' => $indicators->latestDailyRoc($this->ticker),
+            'rocPeriods' => TechnicalIndicatorQueryService::ROC_PERIODS])
             ->layout('components.layouts.app', ['title' => 'Phân tích']);
     }
 }

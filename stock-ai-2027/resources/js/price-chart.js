@@ -13,7 +13,8 @@ const paneDefinitions = [
 ];
 
 // Đối tượng chart nằm trong closure, tránh Alpine proxy các API canvas của thư viện.
-window.stockPriceChart = (data, resolution) => {
+window.stockPriceChart = (data, resolution, { showIndicators = true } = {}) => {
+    const indicatorPanes = showIndicators ? paneDefinitions : [];
     let chart, price, themeObserver, paneObserver, disposed = false;
     let current, pending, frame = null, layoutDirty = false, lastTime = null;
     const lines = new Map();
@@ -97,9 +98,11 @@ window.stockPriceChart = (data, resolution) => {
                     lines.set(field, line);
                     return line;
                 };
-                smaDefinitions.forEach(([period, color]) => addLine(`sma_${period}`, color, 0, { visible: this.enabled[`sma_${period}`] }));
-                addLine('volume_sma_20', '#0ea5e9', 0, { priceScaleId: 'volume', priceFormat: { type: 'volume' } });
-                paneDefinitions.forEach((pane, index) => {
+                if (showIndicators) {
+                    smaDefinitions.forEach(([period, color]) => addLine(`sma_${period}`, color, 0, { visible: this.enabled[`sma_${period}`] }));
+                    addLine('volume_sma_20', '#0ea5e9', 0, { priceScaleId: 'volume', priceFormat: { type: 'volume' } });
+                }
+                indicatorPanes.forEach((pane, index) => {
                     pane.fields.forEach(([field, , color], position) => {
                         const line = addLine(field, color, index + 1, {
                             lineWidth: 1,
@@ -114,9 +117,9 @@ window.stockPriceChart = (data, resolution) => {
                 chart.timeScale().setVisibleLogicalRange({ from: Math.max(0, data.length - 200), to: data.length + 5 });
                 const item = (field, name, color, isVolume = false) => ({ field, label: name, color, isVolume, value: '—', visible: true, showLabel: true });
                 this.panels = [{ title: '', top: 8, items: [
-                    item('volume', 'KL', '#0ea5e9', true), item('volume_sma_20', 'KL SMA20', '#0ea5e9', true),
-                    ...this.averages.map((average) => item(average.field, average.label, average.color)),
-                ] }, ...paneDefinitions.map((pane) => ({ title: pane.title, top: 8,
+                    item('volume', 'KL', '#0ea5e9', true),
+                    ...(showIndicators ? [item('volume_sma_20', 'KL SMA20', '#0ea5e9', true), ...this.averages.map((average) => item(average.field, average.label, average.color))] : []),
+                ] }, ...indicatorPanes.map((pane) => ({ title: pane.title, top: 8,
                     items: pane.fields.map(([field, name, color], index) => ({ ...item(field, name, color, pane.volume), showLabel: index > 0 })) }))];
                 this.refreshLayout();
                 this.show(latest);

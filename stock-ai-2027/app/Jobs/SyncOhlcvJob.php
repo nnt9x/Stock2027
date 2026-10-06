@@ -8,6 +8,7 @@ use Illuminate\Bus\Batchable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Http\Client\RequestException;
 
 class SyncOhlcvJob implements ShouldBeUnique, ShouldQueue
 {
@@ -39,13 +40,30 @@ class SyncOhlcvJob implements ShouldBeUnique, ShouldQueue
         return $this->ticker.':'.$this->resolution;
     }
 
+    /** DNSE không nhận mã là lỗi vĩnh viễn: kết thúc job ngay, còn lỗi mạng/server giữ retry. */
+    public function handle(OhlcvSyncService $service): void
+    {
+        try {
+            $this->synchronize($service);
+        } catch (RequestException $exception) {
+            if ($exception->response->status() === 400
+                && strtolower(trim((string) $exception->response->json('message'))) === 'invalid symbol') {
+                $this->fail($exception);
+
+                return;
+            }
+
+            throw $exception;
+        }
+    }
+
     /**
      * Tải trọn khoảng dữ liệu trong một lượt, không chia job theo tháng.
      * Xử lý ngay cả resolution kia khi được đánh dấu tải lại, không chờ lượt queue tiếp theo.
      * Không thêm job vì batch đã có cả hai resolution. Job còn sống giữ batch pending
      * đến khi phần tải lại phát sinh hoàn tất, kể cả job của resolution kia đã kết thúc.
      */
-    public function handle(OhlcvSyncService $service): void
+    private function synchronize(OhlcvSyncService $service): void
     {
         if ($this->batch()?->cancelled()) {
             return;

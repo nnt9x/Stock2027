@@ -14,6 +14,28 @@ class CompanyChartTest extends TestCase
 {
     use RefreshDatabase;
 
+    /** ROC dùng bản ghi ngày mới nhất đúng mã, giữ dấu/zero/null và không đổi sang ROC giờ. */
+    public function test_daily_roc_summary_follows_selected_ticker(): void
+    {
+        Company::factory()->create(['ticker' => 'ACB']);
+        Company::factory()->create(['ticker' => 'FPT']);
+        TechnicalIndicator::create(['ticker' => 'ACB', 'resolution' => '1D',
+            'timestamp' => 1704186000, 'trading_date' => '2024-01-02', 'roc_5' => 99]);
+        TechnicalIndicator::create(['ticker' => 'ACB', 'resolution' => '1D',
+            'timestamp' => 1704272400, 'trading_date' => '2024-01-03',
+            'roc_5' => 2.5, 'roc_10' => -3.25, 'roc_20' => 0]);
+        TechnicalIndicator::create(['ticker' => 'ACB', 'resolution' => '1H',
+            'timestamp' => 1704358800, 'trading_date' => '2024-01-04', 'roc_5' => 888]);
+        TechnicalIndicator::create(['ticker' => 'FPT', 'resolution' => '1D',
+            'timestamp' => 1704272400, 'trading_date' => '2024-01-03', 'roc_5' => 7.5]);
+
+        Livewire::test(Chart::class)->assertSee('+2.50%')->assertSee('-3.25%')->assertSee('0.00%')
+            ->assertSee('03/01/2024')->assertSee('200 phiên')
+            ->assertViewHas('roc', fn ($roc) => $roc->roc_200 === null)
+            ->set('resolution', '1H')->assertSee('+2.50%')->assertDontSee('888.00%')
+            ->set('selectedTicker', 'FPT')->assertSee('+7.50%')->assertDontSee('+2.50%');
+    }
+
     /** Ghép đúng chỉ báo với nến cùng mã/khung/timestamp, giữ null và số 0 đúng nghĩa. */
     public function test_chart_maps_stored_indicators_and_missing_values(): void
     {
